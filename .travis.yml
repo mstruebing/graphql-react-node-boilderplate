@@ -1,0 +1,14 @@
+sudo: false
+
+notifications:
+  email: false
+
+language: node_js
+
+cache: yarn
+
+script:
+  - make install
+  - make lint
+  - make build
+  - make test
