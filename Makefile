@@ -6,6 +6,10 @@ serverDir = $(rootDir)/server
 
 node_modules = node_modules/.bin
 
+# Info target which lists all targets
+info:
+	@grep ^.*: Makefile | grep -v info | sed 's/:$$//'
+
 # Combined
 lint: lint-server lint-client
 
