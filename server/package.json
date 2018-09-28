@@ -1,5 +1,9 @@
 {
   "dependencies": {
+    "@babel/cli": "^7.1.0",
+    "@babel/core": "^7.1.0",
+    "@babel/node": "^7.0.0",
+    "@babel/preset-env": "^7.1.0",
     "graphql-yoga": "^1.16.2"
   },
   "devDependencies": {

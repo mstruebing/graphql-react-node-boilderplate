@@ -11,15 +11,21 @@ lint: lint-server lint-client
 
 install: setup install-server install-client
 
+build: build-client build-server
+
 # Client
 start-client:
 	cd $(clientDir) && \
 	$(node_modules)/react-scripts start
 
+build-client:
+	cd $(clientDir) && \
+	$(node_modules)/react-scripts build
+
 lint-client:
 	cd $(clientDir) && \
 	$(node_modules)/eslint --ext=js --ext=jsx src && \
-	$(node_modules)/editorconfig-checker
+	$(node_modules)/editorconfig-checker --exclude-pattern './build/**'
 
 install-client:
 	cd $(clientDir) && \
@@ -28,12 +34,16 @@ install-client:
 # Server
 start-server:
 	cd $(serverDir) && \
-	$(node_modules)/nodemon src/index.js
+	$(node_modules)/nodemon --exec $(node_modules)/babel-node src/index.js
+
+build-server:
+	cd $(serverDir) && \
+	$(node_modules)/babel src --out-dir dist
 
 lint-server:
 	cd $(serverDir) && \
 	$(node_modules)/xo src && \
-	$(node_modules)/editorconfig-checker
+	$(node_modules)/editorconfig-checker --exclude-pattern './dist/**'
 
 install-server:
 	cd $(serverDir) && \

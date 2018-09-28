@@ -1,8 +1,7 @@
-const Mutation = require('./mutation');
-const Query = require('./query');
+import Mutation from './mutation';
+import Query from './query';
 
-module.exports = {
+export default {
 	Query,
 	Mutation
 };
-
