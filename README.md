@@ -1,4 +1,4 @@
-# Graphl React Node Boilerplate
+# Graphl React Node Boilerplate [![Build Status](https://travis-ci.org/mstruebing/graphql-react-node-boilderplate.svg?branch=master)](https://travis-ci.org/mstruebing/graphql-react-node-boilderplate)
 
 Just because this makes experimenting with graphql easier for me :)
 
