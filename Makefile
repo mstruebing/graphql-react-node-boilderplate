@@ -9,7 +9,7 @@ node_modules = node_modules/.bin
 # Combined
 lint: lint-server lint-client
 
-install: install-server install-client
+install: setup install-server install-client
 
 # Client
 start-client:
