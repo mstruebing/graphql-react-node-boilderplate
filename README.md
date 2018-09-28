@@ -51,13 +51,13 @@ $ make
 lint: lint-server lint-client
 install: setup install-server install-client
 build: build-client build-server
-start-client:
-build-client:
-lint-client:
-install-client:
-start-server:
-build-server:
-lint-server:
-install-server:
-setup:
+start-client
+build-client
+lint-client
+install-client
+start-server
+build-server
+lint-server
+install-server
+setup
 ```
