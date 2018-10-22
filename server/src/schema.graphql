@@ -1,7 +1,9 @@
 type Query {
   info: String!
+  login(email: String, password: String): String
 }
 
 type Mutation {
   info: String!
+  register(email: String, password: String): Boolean
 }

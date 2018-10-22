@@ -3,6 +3,8 @@ import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
 
 // own-imports
+import Register from './Register';
+import Login from './Login';
 import logo from '../logo.svg';
 import '../styles/App.css';
 
@@ -18,6 +20,8 @@ const App = () => (
       <img src={logo} className="App-logo" alt="logo" />
       <h1 className="App-title">Welcome to React</h1>
     </header>
+    <Register />
+    <Login />
     <Query query={INFO_QUERY}>
       {({ loading, error, data }) => {
         if (loading) return <div>Fetching</div>;
