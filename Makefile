@@ -1,19 +1,18 @@
 # Constants
 
-ROOT_DIR = $$PWD
+ROOT_DIR = .
 CLIENT_DIR = $(ROOT_DIR)/client
 SERVER_DIR = $(ROOT_DIR)/server
-ENV_FILE = .env
+ENV_FILE = $(ROOT_DIR)/.env
 
 NODE_MODULES = node_modules/.bin
 
 # Include env file
 # May contain secrets
 
-ifeq ("$(wildcard $(ROOT_DIR)/$(ENV_FILE))","")
-	include .env
+ifneq ("$(wildcard $(ENV_FILE))","")
+	include $(ENV_FILE)
 endif
-
 
 # Info target which lists all targets
 info:
@@ -23,6 +22,7 @@ info:
 lint: lint-server lint-client
 
 install: setup install-server install-client
+	echo $(JWT_SECRET)
 
 build: build-client build-server
 
