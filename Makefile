@@ -1,3 +1,7 @@
+# Include env file
+
+include .env
+
 # Vars
 
 rootDir = $$PWD
@@ -44,7 +48,7 @@ test-client:
 # Server
 start-server:
 	@cd $(serverDir) && \
-	$(node_modules)/nodemon --exec $(node_modules)/babel-node src/index.js
+	JWT_SECRET=$(JWT_SECRET) $(node_modules)/nodemon --exec $(node_modules)/babel-node src/index.js
 
 build-server:
 	@cd $(serverDir) && \

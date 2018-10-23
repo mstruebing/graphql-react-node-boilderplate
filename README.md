@@ -35,6 +35,15 @@ make install && \
 make build
 ```
 
+You will need to create an `.env` file in the root of the directory where you
+can store your secrets.
+
+At the moment only `JWT_SECRET` is needed to sign the jwt-tokens. 
+
+```
+export JWT_SECRET='hallowelt'
+```
+
 Important commands:
 `make start-client`: starts the client for development purpose.
 `make start-server`: starts the server for development purpose.
