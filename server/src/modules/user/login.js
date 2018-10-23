@@ -2,6 +2,7 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
 import {userExists} from './utils';
+import {secret, options} from './jwt-options';
 
 const errorMsg = 'ERROR: Wrong email or user doesnt exist';
 
@@ -19,8 +20,6 @@ const login = (email, password) => {
 	}
 
 	const payload = {user: user.email};
-	const options = {expiresIn: '2d', issuer: 'http://localhost:4000'};
-	const secret = process.env.JWT_SECRET;
 	const token = jwt.sign(payload, secret, options);
 
 	return token;

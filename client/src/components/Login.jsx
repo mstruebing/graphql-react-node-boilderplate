@@ -30,18 +30,21 @@ class Login extends React.PureComponent {
     });
   }
 
-  handleSubmit(event) {
+  async handleSubmit(event) {
     event.preventDefault();
     const { email, password } = this.state;
     const { client } = this.props;
 
-    client.query({
+    const data = await client.query({
       query: LOGIN,
       variables: {
         email,
         password,
       },
     });
+
+    const token = data.data.login;
+    localStorage.setItem('token', token);
   }
 
   render() {
