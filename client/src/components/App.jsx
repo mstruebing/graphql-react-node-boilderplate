@@ -14,6 +14,31 @@ const INFO_QUERY = gql`
   }
 `;
 
+const VERIFY_TOKEN_QUERY = gql`
+  query verifyToken($token: String!) {
+    verifyToken(token: $token)
+  }
+`;
+
+const validateToken = () => {
+  const token = localStorage.getItem('token');
+
+  return (
+    <Query query={VERIFY_TOKEN_QUERY} variables={{ token }}>
+      {({ loading, error, data }) => {
+        if (loading) return <div>Fetching</div>;
+        if (error) return <div>ERROR: No Valid Token</div>;
+
+        if (data.verifyToken) {
+          return (<div>VALID TOKEN, DUDE!</div>);
+        }
+
+        return (<div>ERROR: NO VALID TOKEN, PUSSY</div>);
+      }}
+    </Query>
+  );
+};
+
 const App = () => (
   <div className="App">
     <header className="App-header">
@@ -30,6 +55,9 @@ const App = () => (
         return (<div>{data.info}</div>);
       }}
     </Query>
+    {
+      validateToken()
+    }
   </div>
 );
 

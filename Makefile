@@ -1,10 +1,18 @@
-# Vars
+# Constants
 
-rootDir = $$PWD
-clientDir = $(rootDir)/client
-serverDir = $(rootDir)/server
+ROOT_DIR = .
+CLIENT_DIR = $(ROOT_DIR)/client
+SERVER_DIR = $(ROOT_DIR)/server
+ENV_FILE = $(ROOT_DIR)/.env
 
-node_modules = node_modules/.bin
+NODE_MODULES = node_modules/.bin
+
+# Include env file
+# May contain secrets
+
+ifneq ("$(wildcard $(ENV_FILE))","")
+	include $(ENV_FILE)
+endif
 
 # Info target which lists all targets
 info:
@@ -14,6 +22,7 @@ info:
 lint: lint-server lint-client
 
 install: setup install-server install-client
+	echo $(JWT_SECRET)
 
 build: build-client build-server
 
@@ -21,46 +30,46 @@ test: test-client test-server
 
 # Client
 start-client:
-	@cd $(clientDir) && \
-	$(node_modules)/react-scripts start
+	@cd $(CLIENT_DIR) && \
+	$(NODE_MODULES)/react-scripts start
 
 build-client:
-	@cd $(clientDir) && \
-	$(node_modules)/react-scripts build
+	@cd $(CLIENT_DIR) && \
+	$(NODE_MODULES)/react-scripts build
 
 lint-client:
-	@cd $(clientDir) && \
-	$(node_modules)/eslint --ext=js --ext=jsx src && \
-	$(node_modules)/editorconfig-checker --exclude-pattern './build/**'
+	@cd $(CLIENT_DIR) && \
+	$(NODE_MODULES)/eslint --ext=js --ext=jsx src && \
+	$(NODE_MODULES)/editorconfig-checker --exclude-pattern './build/**'
 
 install-client:
-	@cd $(clientDir) && \
+	@cd $(CLIENT_DIR) && \
 	yarn install
 
 test-client:
-	@cd $(clientDir) && \
+	@cd $(CLIENT_DIR) && \
 	echo TO BE IMPLEMENTED
 
 # Server
 start-server:
-	@cd $(serverDir) && \
-	$(node_modules)/nodemon --exec $(node_modules)/babel-node src/index.js
+	@cd $(SERVER_DIR) && \
+	JWT_SECRET=$(JWT_SECRET) $(NODE_MODULES)/nodemon --exec $(NODE_MODULES)/babel-node src/index.js
 
 build-server:
-	@cd $(serverDir) && \
-	$(node_modules)/babel src --out-dir dist
+	@cd $(SERVER_DIR) && \
+	$(NODE_MODULES)/babel src --out-dir dist
 
 lint-server:
-	@cd $(serverDir) && \
-	$(node_modules)/xo src && \
-	$(node_modules)/editorconfig-checker --exclude-pattern './dist/**'
+	@cd $(SERVER_DIR) && \
+	$(NODE_MODULES)/xo src && \
+	$(NODE_MODULES)/editorconfig-checker --exclude-pattern './dist/**'
 
 install-server:
-	@cd $(serverDir) && \
+	@cd $(SERVER_DIR) && \
 	yarn install
 
 test-server:
-	@cd $(serverDir) && \
+	@cd $(SERVER_DIR) && \
 	echo TO BE IMPLEMENTED
 
 # Misc
