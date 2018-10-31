@@ -1,22 +1,25 @@
 import jwt from 'jsonwebtoken';
 
-import {userExists} from './utils';
 import {secret, options} from './jwt-options';
 
-const errorMsg = 'ERROR: User doesnt exists';
-
-const verifyToken = token => {
+const verifyToken = async (parent, args, context, _ = null) => {
 	try {
-		const {user} = jwt.verify(token, secret, options);
+		const {token} = args;
+		const jwtUser = jwt.verify(token, secret, options);
+		const dbUser = await context.db.query.user(
+			{where: {id: jwtUser.id}},
+			' { id activeToken username email } ');
 
-		if (!userExists(user)) {
-			throw new Error(errorMsg);
+		const {activeToken} = dbUser;
+
+		if (token !== activeToken) {
+			return null;
 		}
-	} catch (_) {
-		return false;
-	}
 
-	return true;
+		return {...dbUser};
+	} catch (_) {
+		return null;
+	}
 };
 
 export default verifyToken;

@@ -1,10 +1,25 @@
 type Query {
+  # testing purpose
   info: String!
-  login(email: String, password: String): String
-  verifyToken(token: String): Boolean
+
+  verifyToken(token: String): User
 }
 
 type Mutation {
   info: String!
-  register(email: String, password: String): Boolean
+
+  register(email: String!, password: String!, username: String!): AuthPayload
+  login(email: String!, password: String!): AuthPayload
+  logout(token: String): Boolean
+}
+
+type AuthPayload {
+  token: String
+  user: User
+}
+
+type User {
+  id: ID!
+  username: String!
+  email: String!
 }

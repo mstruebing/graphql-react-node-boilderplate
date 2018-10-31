@@ -1,15 +1,30 @@
 import React from 'react';
 import gql from 'graphql-tag';
+import { Mutation } from 'react-apollo';
 import PropTypes from 'prop-types';
-import { withApollo } from 'react-apollo';
 
 const LOGIN = gql`
-  query login($email: String!, $password: String!) {
-    login(email: $email, password: $password)
+  mutation login($email: String!, $password: String!) {
+    login(email: $email, password: $password) {
+      token
+      user {
+        id,
+        email,
+        username
+      }
+    }
   }
 `;
 
-class Login extends React.PureComponent {
+export default class Login extends React.PureComponent {
+  static propTypes = {
+    onLogin: PropTypes.func,
+  };
+
+  static defaultProps = {
+    onLogin: () => {},
+  };
+
   constructor() {
     super();
     this.state = {
@@ -18,49 +33,61 @@ class Login extends React.PureComponent {
     };
   }
 
-  setEmail(event) {
+  setEmail = (event) => {
     this.setState({
       email: event.currentTarget.value,
     });
   }
 
-  setPassword(event) {
+  setPassword = (event) => {
     this.setState({
       password: event.currentTarget.value,
     });
   }
 
-  async handleSubmit(event) {
-    event.preventDefault();
-    const { email, password } = this.state;
-    const { client } = this.props;
-
-    const data = await client.query({
-      query: LOGIN,
-      variables: {
-        email,
-        password,
-      },
-    });
-
-    const token = data.data.login;
-    localStorage.setItem('token', token);
-  }
-
   render() {
+    const handleSubmit = sendMutation => async (event) => {
+      event.preventDefault();
+
+      const response = await sendMutation();
+      const { onLogin } = this.props;
+
+      const {
+        token,
+        user: { id, email, username },
+      } = response.data.login;
+
+      localStorage.setItem('token', token);
+      onLogin(token, username, email, id);
+
+      return false;
+    };
+
+    const { email, password } = this.state;
+
     return (
-      <form onSubmit={this.handleSubmit.bind(this)}>
-        <input type="email" onInput={this.setEmail.bind(this)} required />
-        <input type="password" onInput={this.setPassword.bind(this)} required />
-        <button type="submit">Login</button>
-      </form>
+      <Mutation
+        mutation={LOGIN}
+        variables={{ email, password }}
+      >
+        {sendMutation => (
+          <form onSubmit={handleSubmit(sendMutation)}>
+            <input
+              type="email"
+              onInput={this.setEmail}
+              placeholder="email"
+              required
+            />
+            <input
+              type="password"
+              onInput={this.setPassword}
+              placeholder="password"
+              required
+            />
+            <button type="submit">Login</button>
+          </form>
+        )}
+      </Mutation>
     );
   }
 }
-Login.propTypes = {
-  client: PropTypes.shape({
-    query: PropTypes.func.isRequired,
-  }).isRequired,
-};
-
-export default withApollo(Login);

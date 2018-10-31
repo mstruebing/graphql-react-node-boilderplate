@@ -1,28 +1,31 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
-import {userExists} from './utils';
 import {secret, options} from './jwt-options';
 
-const errorMsg = 'ERROR: Wrong email or user doesnt exist';
-
-const login = (email, password) => {
-	const user = userExists(email);
+const login = async (parent, args, context, _) => {
+	const user = await context.db.query.user({where: {email: args.email}}, ' { id password username email } ');
 
 	if (!user) {
-		throw new Error(errorMsg);
+		throw new Error('No such user found');
 	}
 
-	const isCorrectPassword = bcrypt.compareSync(password, user.password);
-
-	if (!isCorrectPassword) {
-		throw new Error(errorMsg); // To not let ppl know the user exists
+	const valid = await bcrypt.compare(args.password, user.password);
+	if (!valid) {
+		throw new Error('Invalid password');
 	}
 
-	const payload = {user: user.email};
-	const token = jwt.sign(payload, secret, options);
+	const token = jwt.sign({id: user.id}, secret, options);
 
-	return token;
+	await context.db.mutation.updateUser({
+		data: {activeToken: token},
+		where: {email: user.email}
+	}, '{ activeToken }');
+
+	return {
+		token,
+		user
+	};
 };
 
 export default login;
