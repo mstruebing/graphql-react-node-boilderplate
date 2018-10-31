@@ -1,10 +1,10 @@
-import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken';
+import {hash} from 'bcrypt';
+import * as jwt from 'jsonwebtoken';
 
 import {secret, options} from './jwt-options';
 
 const register = async (parent, args, context, _) => {
-	const password = await bcrypt.hash(args.password, 10);
+	const password = await hash(args.password, 10);
 	const user = await context.db.mutation.createUser({
 		data: {...args, password}
 	}, '{ id username email }');

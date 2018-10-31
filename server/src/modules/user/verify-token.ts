@@ -1,4 +1,4 @@
-import jwt from 'jsonwebtoken';
+var jwt = require('jsonwebtoken');
 
 import {secret, options} from './jwt-options';
 

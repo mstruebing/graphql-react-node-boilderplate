@@ -1,3 +1,4 @@
+import '@babel/polyfill';
 import {GraphQLServer} from 'graphql-yoga';
 import {Prisma} from 'prisma-binding';
 
@@ -19,8 +20,8 @@ const server = new GraphQLServer({
 });
 
 const options = {
-	port: process.env.PORT || 4000,
-	playground: process.env.NODE_ENV === 'Production' ? false : '/playground',
+	port: Number(process.env.PORT) || 4000,
+	playground: process.env.NODE_ENV === 'Production' ? '' : '/playground',
 	endpoint: '/graphql'
 };
 

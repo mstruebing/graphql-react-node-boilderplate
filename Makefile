@@ -53,7 +53,7 @@ test-client:
 # Server
 start-server:
 	@cd $(SERVER_DIR) && \
-	JWT_SECRET=$(JWT_SECRET) $(NODE_MODULES)/nodemon --exec $(NODE_MODULES)/babel-node src/index.js
+	JWT_SECRET=$(JWT_SECRET) $(NODE_MODULES)/nodemon --exec $(NODE_MODULES)/ts-node src/index.ts
 
 start-database:
 	@cd $(SERVER_DIR)/database && \
