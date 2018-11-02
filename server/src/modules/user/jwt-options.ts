@@ -1,6 +1,8 @@
-const secret = (process.env.NODE_ENV === "Production" && process.env.JWT_SECRET) || "helloworld";
+import {IJWTOptions} from "./interfaces";
 
-const options = {
+const secret: string = (process.env.NODE_ENV === "Production" && process.env.JWT_SECRET) || "helloworld";
+
+const options: IJWTOptions = {
     expiresIn: "2d",
     issuer: "http://localhost:4000",
 };
