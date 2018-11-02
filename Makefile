@@ -65,7 +65,7 @@ build-server:
 
 lint-server:
 	@cd $(SERVER_DIR) && \
-	$(NODE_MODULES)/xo src && \
+	$(NODE_MODULES)/tslint --project . && \
 	$(NODE_MODULES)/editorconfig-checker --exclude-pattern './dist/**'
 
 install-server:

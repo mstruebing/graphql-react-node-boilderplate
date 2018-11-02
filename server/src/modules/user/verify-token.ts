@@ -1,25 +1,26 @@
-var jwt = require('jsonwebtoken');
+// tslint:disable-next-line
+const jwt = require("jsonwebtoken");
 
-import {secret, options} from './jwt-options';
+import {options, secret} from "./jwt-options";
 
 const verifyToken = async (parent, args, context, _ = null) => {
-	try {
-		const {token} = args;
-		const jwtUser = jwt.verify(token, secret, options);
-		const dbUser = await context.db.query.user(
-			{where: {id: jwtUser.id}},
-			' { id activeToken username email } ');
+    try {
+        const {token} = args;
+        const jwtUser = jwt.verify(token, secret, options);
+        const dbUser = await context.db.query.user(
+            {where: {id: jwtUser.id}},
+            " { id activeToken username email } ");
 
-		const {activeToken} = dbUser;
+        const {activeToken} = dbUser;
 
-		if (token !== activeToken) {
-			return null;
-		}
+        if (token !== activeToken) {
+            return null;
+        }
 
-		return {...dbUser};
-	} catch (_) {
-		return null;
-	}
+        return {...dbUser};
+    } catch (_) {
+        return null;
+    }
 };
 
 export default verifyToken;
