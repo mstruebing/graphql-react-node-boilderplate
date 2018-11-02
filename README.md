@@ -12,9 +12,9 @@ Linting via [editorconfig-checker](https://github.com/editorconfig-checker/edito
 and [eslint](https://eslint.org/)
 
 ### Backend
-Server with node and babel including nodemon for easy development.
+Server with node, typescript and babel including nodemon for easy development.
 Linting via [editorconfig-checker](https://github.com/editorconfig-checker/editorconfig-checker.javascript) 
-and [xo](https://github.com/xojs/xo).
+and tslint.
 
 ### Both
 Githook provides linting on every commit.
@@ -47,6 +47,7 @@ export JWT_SECRET='hallowelt'
 Important commands:
 `make start-client`: starts the client for development purpose.
 `make start-server`: starts the server for development purpose.
+`make start-database`: starts the database via docker.
 
 The Graphl-Playground is reachable via 'http://localhost:4000/playground'
 
@@ -60,13 +61,17 @@ $ make
 lint: lint-server lint-client
 install: setup install-server install-client
 build: build-client build-server
+test: test-client test-server
 start-client
 build-client
 lint-client
 install-client
+test-client
 start-server
+start-database
 build-server
 lint-server
 install-server
+test-server
 setup
 ```
