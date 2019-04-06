@@ -1,4 +1,4 @@
-# Graphl React Node Boilerplate [![Build Status](https://travis-ci.org/mstruebing/graphql-react-node-boilderplate.svg?branch=master)](https://travis-ci.org/mstruebing/graphql-react-node-boilderplate)
+# Graphl React Node Boilerplate [![Build Status](https://travis-ci.org/mstruebing/graphql-react-node-boilderplate.svg?branch=master)](https://travis-ci.org/mstruebing/graphql-react-node-boilderplate) [![Greenkeeper badge](https://badges.greenkeeper.io/mstruebing/graphql-react-node-boilderplate.svg)](https://greenkeeper.io/)
 
 Just because this makes experimenting with graphql easier for me :)
 
