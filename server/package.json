@@ -11,12 +11,12 @@
     "@babel/node": "^7.0.0",
     "@babel/preset-env": "^7.1.0",
     "@types/bcrypt": "^3.0.0",
-    "@types/jsonwebtoken": "^7.2.8",
-    "@types/node": "^10.12.1",
+    "@types/jsonwebtoken": "^8.3.2",
+    "@types/node": "^11.13.0",
     "editorconfig-checker": "^2.0.6",
     "nodemon": "^1.18.4",
     "prisma": "^1.19.1",
-    "ts-node": "^7.0.1",
+    "ts-node": "^8.0.3",
     "tslint": "^5.11.0",
     "typescript": "^3.1.4"
   }
