@@ -40,7 +40,7 @@ build-client:
 lint-client:
 	@cd $(CLIENT_DIR) && \
 	$(NODE_MODULES)/eslint --ext=js --ext=jsx src && \
-	$(NODE_MODULES)/editorconfig-checker --exclude-pattern './build/**'
+	$(NODE_MODULES)/editorconfig-checker
 
 install-client:
 	@cd $(CLIENT_DIR) && \
@@ -66,7 +66,7 @@ build-server:
 lint-server:
 	@cd $(SERVER_DIR) && \
 	$(NODE_MODULES)/tslint --project . && \
-	$(NODE_MODULES)/editorconfig-checker --exclude-pattern './dist/**'
+	$(NODE_MODULES)/editorconfig-checker
 
 install-server:
 	@cd $(SERVER_DIR) && \
