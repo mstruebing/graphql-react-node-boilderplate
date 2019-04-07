@@ -10,19 +10,18 @@ NODE_MODULES = node_modules/.bin
 # Include env file
 # May contain secrets
 
-ifneq ("$(wildcard $(ENV_FILE))","")
-	include $(ENV_FILE)
+ifneq ("$(wildcard $(SERVER_DIR)/$(ENV_FILE))","")
+	include $(SERVER_DIR)/$(ENV_FILE)
 endif
 
 # Info target which lists all targets
 info:
-	@grep ^.*: Makefile | grep -v info | sed 's/:$$//'
+	@grep '^\w.*:' Makefile | grep -v info | sed 's/:.*$$//'
 
 # Combined
 lint: lint-server lint-client
 
 install: setup install-server install-client
-	echo $(JWT_SECRET)
 
 build: build-client build-server
 
@@ -56,8 +55,12 @@ start-server:
 	JWT_SECRET=$(JWT_SECRET) $(NODE_MODULES)/nodemon --exec $(NODE_MODULES)/ts-node src/index.ts
 
 start-database:
-	@cd $(SERVER_DIR)/database && \
-	docker-compose up
+	docker-compose --file $(SERVER_DIR)/docker-compose.yaml up
+
+deploy-database:
+	@cd $(SERVER_DIR) && \
+	./node_modules/.bin/prisma deploy
+	
 
 build-server:
 	@cd $(SERVER_DIR) && \
@@ -77,6 +80,13 @@ test-server:
 	echo TO BE IMPLEMENTED
 
 # Misc
-setup:
+setup: .git/hooks/pre-commit
+
+.git/hooks/pre-commit: build/githooks/pre-commit.sh
 	@ln -sf ../../build/githooks/pre-commit.sh .git/hooks/pre-commit
 	@chmod +x .git/hooks/pre-commit
+
+clean:
+	@rm -Rf $(SERVER_DIR)/node_modules
+	@rm -Rf $(CLIENT_DIR)/node_modules
+	@sudo rm -Rf $(SERVER_DIR)/.data
