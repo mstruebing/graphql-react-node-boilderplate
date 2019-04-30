@@ -15,7 +15,7 @@
     "@types/node": "^11.13.0",
     "editorconfig-checker": "^2.0.6",
     "nodemon": "^1.18.4",
-    "prisma": "^1.19.1",
+    "prisma": "^1.32.0",
     "ts-node": "^8.0.3",
     "tslint": "^5.11.0",
     "typescript": "^3.1.4"
