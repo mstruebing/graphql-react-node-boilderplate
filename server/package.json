@@ -1,7 +1,7 @@
 {
   "dependencies": {
     "bcrypt": "^3.0.2",
-    "graphql-yoga": "^1.16.2",
+    "graphql-yoga": "^1.18.0",
     "jsonwebtoken": "^8.3.0",
     "prisma-binding": "^2.1.6"
   },
