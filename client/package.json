@@ -21,7 +21,7 @@
     "eject": "react-scripts eject"
   },
   "devDependencies": {
-    "editorconfig-checker": "^3.0.0"
+    "editorconfig-checker": "^3.0.1"
   },
   "browserslist": [
     ">0.2%",
