@@ -46,8 +46,10 @@ class App extends React.PureComponent {
 
   constructor(props) {
     super(props);
+    this.state = initialState;
 
     const token = getCurrentToken();
+
     this.isTokenValid(token).then((data) => {
       this.setState({
         loggedIn: true,
@@ -58,9 +60,9 @@ class App extends React.PureComponent {
           id: data.id,
         },
       });
+    }).catch(e => {
+      this.setState(initialState);
     });
-
-    this.state = initialState;
   }
 
   handleLogin = (token, username, email, id) => {
